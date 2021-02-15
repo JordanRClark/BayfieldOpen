@@ -9,6 +9,7 @@ class HoleSerializer(serializers.ModelSerializer):
         model = models.Hole
         fields = [
             'id',
+            'number',
             'par',
             'yardage',
         ]
@@ -32,7 +33,14 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Course
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'latitude',
+            'longitude',
+            'par',
+            'yardage',
+        ]
 
     def get_par(self, instance):
         course_pars = {}
@@ -56,4 +64,12 @@ class CourseDetailSerializer(CourseSerializer):
     holes = HoleSerializer(many=True)
     class Meta:
         model = models.Course
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'latitude',
+            'longitude',
+            'par',
+            'yardage',
+            'holes',
+        ]
