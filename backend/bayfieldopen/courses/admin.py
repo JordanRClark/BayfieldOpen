@@ -26,7 +26,7 @@ class HoleAdmin(admin.ModelAdmin):
         'course',
     )
 
-    search_fieldds = (
+    search_fields = (
         'id',
         'course__name',
     )
