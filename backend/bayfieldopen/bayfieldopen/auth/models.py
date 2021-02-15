@@ -16,6 +16,12 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+    def create_testuser(self):
+        user = self.model(email='test@bayfieldopen.ca', is_staff=True, is_superuser=True)
+        user.set_password('test')
+        user.save()
+        return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=256, blank=True)

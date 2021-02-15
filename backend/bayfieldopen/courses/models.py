@@ -1,7 +1,11 @@
 from django.db import models
 
-# Create your models here.
 
+class Tee(models.Model):
+    name = models.CharField(max_length=16)
+
+    def __str__(self):
+        return self.name
 
 class Course(models.Model):
     name = models.CharField(max_length=256)
@@ -13,15 +17,23 @@ class Course(models.Model):
 
 
 class Hole(models.Model):
-    pars = [
-        ('Par 3', 3),
-        ('Par 4', 4),
-        ('Par 5', 5),
-    ]
-
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    par = models.CharField(max_length=5, choices=pars)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='holes')
     number = models.IntegerField()
 
     def __str__(self):
-        return f'#{self.number} - {self.par} - {self.course.name}'
+        return f'#{self.number} - {self.course.name}'
+
+
+class HoleTeeStats(models.Model):
+    pars = [
+        (3, 'Par 3'),
+        (4, 'Par 4'),
+        (5, 'Par 5'),
+    ]
+    hole = models.ForeignKey(Hole, related_name='stats', on_delete=models.CASCADE)
+    par = models.IntegerField(choices=pars)
+    tee = models.ForeignKey(Tee, on_delete=models.CASCADE)
+    yardage = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.tee.name} - {self.par} - {self.yardage}'

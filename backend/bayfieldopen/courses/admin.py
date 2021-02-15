@@ -13,11 +13,16 @@ class CourseAdmin(admin.ModelAdmin):
         'name',
     )
 
+class HoleStatsInline(admin.TabularInline):
+    model = models.HoleTeeStats
+
 
 class HoleAdmin(admin.ModelAdmin):
+    inlines = [
+        HoleStatsInline
+    ]
     list_display = (
         'id',
-        'par',
         'course',
     )
 
